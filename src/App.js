@@ -24,8 +24,10 @@ class App extends Component {
       isLoggedIn: loggedIn
     })
   }
-  handleLogout = () => {
-    
+  logoutHandler = (loggedIn) => {
+    this.setState({
+      isLoggedIn: loggedIn
+    })
   }
 
   render() {
@@ -34,7 +36,7 @@ class App extends Component {
         <Header as='h1'>
           Barley Legal
         </Header>
-        {this.state.isLoggedIn ? <GetBeers handleLogout={this.handleLogout}/> : <Login loginHandler={this.loginHandler}/>}
+        {this.state.isLoggedIn ? <GetBeers logoutHandler={this.logoutHandler}/> : <Login loginHandler={this.loginHandler}/>}
       </div>
     );
   }
