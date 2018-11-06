@@ -20,10 +20,14 @@ export default class Login extends Component {
   }
   handleSubmit = async (e) => {
     e.preventDefault();
-    const loginResponse = await fetch('http://localhost:9000/auth/register', {
+    console.log('its hitting')
+    const loginResponse = await fetch('http://localhost:9000/api/v1/auth/register', {
       method: 'POST',
-      credentials: 'include', // this sends our session cookie with our request
-      body: JSON.stringify(this.state),
+      credentials: 'include',
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      }),
       headers: {
         'Content-Type': 'application/json'
       }
