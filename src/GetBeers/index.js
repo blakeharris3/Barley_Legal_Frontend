@@ -12,7 +12,6 @@ export default class GetBeers extends Component {
   }
   getBeer = async () => {
     try {
-      console.log('WHEN DOES THIS HAPPEN')
       const allBeers = await fetch("http://localhost:9000/api/v1/auth/");
       const beersJson = await allBeers.json();
       console.log(beersJson, 'beers json')
@@ -48,16 +47,14 @@ export default class GetBeers extends Component {
   
   componentDidMount(){
      this.getBeer().then((beers)=>{
-       console.log(beers.data, "data")
-       this.setState({allBeers: beers.data})
-       console.log(this.state.allBeers, "all beers")
+       this.setState({allBeers: beers.data.data})
      }).catch((err)=>{
        console.log(err)
      });
   }
   render(){
     return(
-      <Container>
+      <Container textAlign='center'>
         <Header as='h1' attached='bottom'>
           Beers
         </Header>

@@ -16,7 +16,6 @@ class App extends Component {
     }
   }
   loginHandler = (userName, passWord, eMail, loggedIn) => {
-    console.log(userName, eMail, loggedIn, 'username email is logged in?');
     this.setState({
       username: userName,
       email: eMail,
