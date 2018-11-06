@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Image } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 import './App.css';
 import Login from './Login';
 import GetBeers from './GetBeers'
@@ -37,6 +37,7 @@ class App extends Component {
           Barley Legal
         </Header>
         {this.state.isLoggedIn ? <GetBeers logoutHandler={this.logoutHandler}/> : <Login loginHandler={this.loginHandler}/>}
+
       </div>
     );
   }

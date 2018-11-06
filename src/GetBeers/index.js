@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Container, Segment, Image, Icon, Header, Button, Form } from "semantic-ui-react";
+import { Container, Icon, Header, Button, Form } from "semantic-ui-react";
+import ShowBeers from '../ShowBeers/index.js'
 
 export default class GetBeers extends Component {
   constructor(){
@@ -11,10 +12,16 @@ export default class GetBeers extends Component {
   }
   getBeer = async () => {
     try {
-      const allBeers = await fetch('https://sandbox-api.brewerydb.com/v2/beers?key=7d2b7088dd751a4d391faa03edcb0118');
+      console.log('WHEN DOE STHIS HAPPEN')
+      const allBeers = await fetch('https://sandbox-api.brewerydb.com/v2/beers?key=7d2b7088dd751a4d391faa03edcb0118', {
+        mode: 'no-cors'
+      });
       const beersJson = await allBeers.json();
+      console.log(beersJson, 'beers json')
       return beersJson
+      
     } catch (err) {
+      console.log('error')
       return err
     }
   }
@@ -26,7 +33,9 @@ export default class GetBeers extends Component {
   
   componentDidMount(){
      this.getBeer().then((beers)=>{
+       console.log(beers.data, "data")
        this.setState({allBeers: beers.data})
+       console.log(this.state.allBeers, "all beers")
      }).catch((err)=>{
        console.log(err)
      });
@@ -37,14 +46,13 @@ export default class GetBeers extends Component {
         <Header as='h1' attached='bottom'>
           Beers
         </Header>
-        <Segment>
-          Beer Info
-        </Segment>
+        <ShowBeers allBeers={this.state.allBeers}/>
         <Form onSubmit={this.handleLogout}>
-          <Button fluid color='orange' size='large' type='Submit' > <Icon name='beer' />Logout</Button>
+          <Button fluid color='orange' size='large' type='Submit' > <Icon name='beer' />Logout</Button>     
         </Form>
-        
+          
       </Container>
+      
     )
   }
 }
