@@ -18,11 +18,24 @@ export default class Login extends Component {
       [e.currentTarget.name]: e.currentTarget.value
     })
   }
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-    this.props.loginHandler(this.state.username, this.state.password, this.state.email, true);
-    
+    const loginResponse = await fetch('http://localhost:9000/auth/register', {
+      method: 'POST',
+      credentials: 'include', // this sends our session cookie with our request
+      body: JSON.stringify(this.state),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const parsedResponse = await loginResponse.json();
+    if (parsedResponse.data === 'login successful') {
+      // change our component
+      console.log('success login')
+      // this sends the user info to state 
+      this.props.loginHandler(this.state.username, this.state.password, this.state.email, true);
   }
+}
   render(){
     return(
       <Grid container columns={1} textAlign='center' verticalAlign='middle' style={{ height: '100%' }} inverted color='brown' >

@@ -12,10 +12,8 @@ export default class GetBeers extends Component {
   }
   getBeer = async () => {
     try {
-      console.log('WHEN DOE STHIS HAPPEN')
-      const allBeers = await fetch('https://sandbox-api.brewerydb.com/v2/beers?key=7d2b7088dd751a4d391faa03edcb0118', {
-        mode: 'no-cors'
-      });
+      console.log('WHEN DOES THIS HAPPEN')
+      const allBeers = await fetch("http://localhost:3333/api/v1/auth/");
       const beersJson = await allBeers.json();
       console.log(beersJson, 'beers json')
       return beersJson
