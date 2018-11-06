@@ -13,7 +13,7 @@ export default class GetBeers extends Component {
   getBeer = async () => {
     try {
       console.log('WHEN DOES THIS HAPPEN')
-      const allBeers = await fetch("http://localhost:3333/api/v1/auth/");
+      const allBeers = await fetch("http://localhost:9000/api/v1/auth/");
       const beersJson = await allBeers.json();
       console.log(beersJson, 'beers json')
       return beersJson
@@ -22,6 +22,23 @@ export default class GetBeers extends Component {
       console.log('error')
       return err
     }
+  }
+  addLikedBeer = async () => {
+    try {
+      const likedBeer = await fetch('http://localhost:9000/api/v1/auth/isLiked', {
+        method: 'PUT',
+        body: JSON.stringify({
+          name: this.state.beers.name,
+          description: this.state.movieToEdit.description
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    } catch (error) {
+      console.log(error)
+    }
+
   }
   handleLogout = (e) => {
     e.preventDefault();
