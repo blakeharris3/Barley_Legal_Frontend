@@ -2,45 +2,29 @@ import React, { Component } from 'react';
 import { Header } from 'semantic-ui-react';
 import './App.css';
 import Login from './Login';
-import GetBeers from './GetBeers'
-// import { Route, Switch } from 'react-router-dom';
+import Beers from './BeerContainer'
+import BeerHeader from './Header'
+import UsersBeers from './UsersBeer'
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 class App extends Component {
-  constructor(){
-    super();
-    this.state = {
-      username: '',
-      password: '',
-      email: '',
-      isLoggedIn: false
-    }
-  }
-  loginHandler = (userName, passWord, eMail, loggedIn) => {
-    console.log(userName, eMail, loggedIn, 'username email is logged in?');
-    this.setState({
-      username: userName,
-      email: eMail,
-      password: passWord,
-      isLoggedIn: loggedIn
-    })
-  }
-  logoutHandler = (loggedIn) => {
-    this.setState({
-      isLoggedIn: loggedIn
-    })
-  }
 
   render() {
     return (
       <div className="App">
-        <Header as='h1'>
+        <Header as='h1' >
           Barley Legal
         </Header>
-        {this.state.isLoggedIn ? <GetBeers logoutHandler={this.logoutHandler}/> : <Login loginHandler={this.loginHandler}/>}
-
+        <BeerHeader/>
+        <Switch >
+          <Route exact path='/' component={Login} />
+          <Route exact path='/beers' component={Beers} />
+          <Route exact path='/usersbeers' component={UsersBeers}/>
+          {/* {this.state.isLoggedIn ? <GetBeers logoutHandler={this.logoutHandler}/> : <Login loginHandler={this.loginHandler}/>} */}
+        </Switch>
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
