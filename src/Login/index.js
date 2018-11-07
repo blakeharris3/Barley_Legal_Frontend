@@ -1,28 +1,43 @@
 import React, { Component } from 'react';
 import { Button, Form, Input, Header, Grid, Segment, Icon } from 'semantic-ui-react';
 import "./login.css";
+import { withRouter } from "react-router";
 
-export default class Login extends Component {
+ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      username: '',
-      password: ''
+      usernameLog: '',
+      passwordLog: '',
+      usernameReg: '',
+      passwordReg: '',
+      userId: ''
     }
   }
 
   componentDidUpdate(){
-    console.log(this.state, "line 15 login")
+    if(this.state.userId){
+      const userId = JSON.stringify(this.state.userId)
+      localStorage.setItem("userId", userId)
+    }
   }
-  handleInput = (e) => {
+
+
+  handleLoginInput = (e) => {
+    e.preventDefault()
     this.setState({
       [e.currentTarget.name]: e.currentTarget.value
     })
   }
-  handleSubmit = async (e) => {
+  handleRegisterInput = (e) => {
     e.preventDefault();
-    console.log(this.state, 'state')
-    const loginResponse = await fetch('http://localhost:9000/api/v1/auth/register', {
+    this.setState({
+      [e.currentTarget.name]: e.currentTarget.value
+    })
+  }
+  handleRegister = async (e) => {
+    e.preventDefault();
+    const registerResponse = await fetch('http://localhost:9000/api/v1/auth/register', {
       method: 'POST',
       body: JSON.stringify(this.state),
       headers: {
@@ -30,13 +45,18 @@ export default class Login extends Component {
       }
     });
   
-    const parsedResponse = await loginResponse.json();
-    console.log(parsedResponse, 'parsed response')
-    if (parsedResponse.data === 'login successful') {
+    const parsedResponse = await registerResponse.json();
+    console.log(parsedResponse.userId, 'parsed response userid')
+    if (parsedResponse.data === 'register successful') {
       // change our component
-      console.log('success login')
-      // this sends the user info to state 
-      this.props.loginHandler(this.state.username, this.state.password, this.state.email, true);
+      console.log('success register') 
+      this.setState({
+        userId: parsedResponse.userId
+      })     
+      this.props.history.push({
+        pathname: '/beers',
+        state: {userId: this.state.userId}
+      })
     }
     else {
       console.log('not working')
@@ -47,25 +67,40 @@ export default class Login extends Component {
     try{
       const userQ = await fetch("http://localhost:9000/api/v1/auth/login", {
         method: "POST",
-        body: JSON.stringify(this.state),
+        body: JSON.stringify(
+          {username: this.state.usernameLog,
+          password: this.state.passwordLog
+        }),
+        credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json'
         }
       })
-
-      if(userQ.status === 200){
-        this.props.loginHandler(this.state.username, this.state.password, this.state.email, true);
+      
+      const parsed = await userQ.json()
+      console.log(parsed, 'parsed data')
+      if(parsed.data === 'register successful'){ 
+        console.log('registered')
+        this.setState({
+          userId: parsed._Id
+        })               
+        this.props.history.push({
+          pathname: '/beers',
+          state: {userId: this.state.userId}
+        })
       }
       else{
-        this.state.username = "";
-        this.state.password = "";
+        this.setState({
+           usernameLog: "",
+           passwordLog: ""
+        })
       }
     }
     catch(error){
       console.log(error)
     }
   }
- 
+
   render() {
     return (
       <Grid container columns={1} textAlign='center' verticalAlign='middle' style={{ height: '100%' }} inverted color='brown' >
@@ -75,10 +110,10 @@ export default class Login extends Component {
           </Header>
           <p>And Start Getting Lit</p>
           <Segment color='orange'>
-            <Form onSubmit={this.handleSubmit}>
-              <Input fluid icon='user' iconPosition='left' type='text' name='username' value={this.state.username} onChange={this.handleInput} placeholder='username' />
-              <Input fluid icon='lock' iconPosition='left' type='password' name='password' value={this.state.password} onChange={this.handleInput} placeholder='password' />
-              <Input fluid icon='mail' iconPosition='left' type='text' name='email' value={this.state.email} onChange={this.handleInput} placeholder='email' />
+            <Form onSubmit={this.handleRegister}>
+              <Input fluid icon='user' iconPosition='left' type='text' name='usernameReg' value={this.state.usernameReg} onChange={this.handleRegisterInput} placeholder='username' />
+              <Input fluid icon='lock' iconPosition='left' type='password' name='passwordReg' value={this.state.passwordReg} onChange={this.handleRegisterInput} placeholder='password' />
+              {/* <Input fluid icon='mail' iconPosition='left' type='text' name='email' value={this.state.email} onChange={this.handleRegisterInput} placeholder='email' /> */}
               <Button fluid color='orange' size='large' type='Submit'> <Icon name='beer'/>Register</Button>
             </Form>
           </Segment>
@@ -88,10 +123,9 @@ export default class Login extends Component {
           <p>And Turn Up</p>
           <Segment color='orange'>
             <Form onSubmit={this.handleLogin}>
-              <Input fluid icon='user' iconPosition='left' type='text' name='username' value={this.state.username} onChange={this.handleInput} placeholder='username' />
-              <Input fluid icon='lock' iconPosition='left' type='password' name='password' value={this.state.password} onChange={this.handleInput} placeholder='password' />
-              <Input fluid icon='mail' iconPosition='left' type='text' name='email' value={this.state.email} onChange={this.handleInput} placeholder='email' />
-              <Button fluid color='orange' size='large' type='Submit'> <Icon name='beer' />Register</Button>
+              <Input fluid icon='user' iconPosition='left' type='text' name='usernameLog' value={this.state.usernameLog} onChange={this.handleLoginInput} placeholder='username' />
+              <Input fluid icon='lock' iconPosition='left' type='password' name='passwordLog' value={this.state.passwordLog} onChange={this.handleLoginInput} placeholder='password' />
+              <Button fluid color='orange' size='large' type='Submit'> <Icon name='beer' />Login</Button>
             </Form>
           </Segment>
         </Grid.Column>
@@ -99,3 +133,4 @@ export default class Login extends Component {
     )
   }
 }
+export default withRouter(Login);

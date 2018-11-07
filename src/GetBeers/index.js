@@ -7,14 +7,19 @@ export default class GetBeers extends Component {
     super();
     this.state = {
       beers: [],
-      allBeers:[]
+      allBeers:[],
+      isLiked: [],
+      toTry:[],
+      isDisliked: []
     }
+  }
+  componentDidUpdate(){
+    console.log(this.state.isLiked)
   }
   getBeer = async () => {
     try {
       const allBeers = await fetch("http://localhost:9000/api/v1/auth/");
       const beersJson = await allBeers.json();
-      console.log(beersJson, 'beers json')
       return beersJson
       
     } catch (err) {
@@ -22,28 +27,29 @@ export default class GetBeers extends Component {
       return err
     }
   }
-  addLikedBeer = async () => {
-    try {
-      const likedBeer = await fetch('http://localhost:9000/api/v1/auth/isLiked', {
-        method: 'PUT',
-        body: JSON.stringify({
-          name: this.state.beers.name,
-          description: this.state.movieToEdit.description
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-    } catch (error) {
-      console.log(error)
-    }
 
-  }
-  handleLogout = (e) => {
-    e.preventDefault();
-    this.props.logoutHandler(false);
+  handleLiked = (beer) => {   
+    this.setState({
+      isLiked: [...this.state.isLiked, beer ],
+    })
+    console.log(this.state.isLiked[0].data.isLiked, 'This is liked')
+    
+  }   
 
+  handleToTry = (beer) => {   
+    this.setState({
+      toTry: [...this.state.toTry, beer ],
+    })
+    console.log(this.state.toTry[0].data.toTry, 'toTry')
+    
   }
+
+  handleDisliked = (beer) => {   
+    this.setState({
+      isDisliked: [...this.state.isDisliked, beer ],
+    })
+    console.log(this.state.isDisliked[0].data.isDisliked, ' is disliked')
+  }   
   
   componentDidMount(){
      this.getBeer().then((beers)=>{
@@ -53,13 +59,15 @@ export default class GetBeers extends Component {
      });
   }
   render(){
+
     return(
       <Container textAlign='center'>
         <Header as='h1' attached='bottom'>
           Beers
+          
         </Header>
-        <ShowBeers allBeers={this.state.allBeers}/>
-        <Form onSubmit={this.handleLogout}>
+        <ShowBeers userId={this.props.userId} allBeers={this.state.allBeers} handleLiked={this.handleLiked} handleToTry={this.handleToTry} handleDisliked={this.handleDisliked}/>
+        <Form onSubmit={this.props.handleLogout}>
           <Button fluid color='orange' size='large' type='Submit' > <Icon name='beer' />Logout</Button>     
         </Form>
           
