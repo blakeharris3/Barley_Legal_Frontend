@@ -1,0 +1,28 @@
+body{
+  background-color: cornsilk;
+}
+h1.ui.header{
+  font-size: 60px;
+}
+li{
+  list-style: none;
+}
+.App{
+  /* background-image: url(https://i.imgur.com/iyUYupy.jpg);
+  background-position: top;
+  background-repeat: no-repeat; */
+  background-color: rgba(253, 186, 0, 0.411);
+}
+div.ui.segment{
+  
+  background-image: url(https://i.imgur.com/rfKlxZW.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  
+}
+img.ui.image{
+  width: 5em;
+}
+div.ui.two.column.grid{
+  margin-top: 10px;
+}
