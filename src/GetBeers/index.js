@@ -23,7 +23,7 @@ import { withRouter } from 'react-router-dom';
   }
   getBeer = async () => {
     try {
-      const allBeers = await fetch("http://localhost:9000/api/v1/auth/");
+      const allBeers = await fetch("https://stormy-wildwood-16563.herokuapp.com/api/v1/auth/");
       const beersJson = await allBeers.json();
       return beersJson
       

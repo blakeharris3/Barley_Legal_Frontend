@@ -38,7 +38,7 @@ import { withRouter } from "react-router";
   }
   handleRegister = async (e) => {
     e.preventDefault();
-    const registerResponse = await fetch('http://localhost:9000/api/v1/auth/register', {
+    const registerResponse = await fetch('https://stormy-wildwood-16563.herokuapp.com/api/v1/auth/register', {
       method: 'POST',
       body: JSON.stringify({username: this.state.usernameReg,
         password: this.state.passwordReg}),
@@ -66,7 +66,7 @@ import { withRouter } from "react-router";
   handleLogin = async (e) => {
     e.preventDefault();
     try{
-      const userQ = await fetch("http://localhost:9000/api/v1/auth/login", {
+      const userQ = await fetch("https://stormy-wildwood-16563.herokuapp.com/api/v1/auth/login", {
         method: "POST",
         body: JSON.stringify(
           {username: this.state.usernameLog,

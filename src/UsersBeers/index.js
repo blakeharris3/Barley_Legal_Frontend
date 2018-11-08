@@ -19,7 +19,7 @@ class UsersBeers extends Component {
   removeToTry = async(beer , e) => {
     const JsonUser = localStorage.getItem("userId")
     const userId = JSON.parse(JsonUser)
-    const abeer = await fetch("http://localhost:9000/api/v1/auth/toTry", 
+    const abeer = await fetch("https://stormy-wildwood-16563.herokuapp.com/api/v1/auth/toTry", 
     {method: "DELETE",
     body: JSON.stringify(beer),
     userId: userId

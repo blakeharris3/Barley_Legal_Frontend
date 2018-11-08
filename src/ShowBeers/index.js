@@ -36,7 +36,7 @@ class ShowBeers extends Component {
   }
   addLikedBeer = async (beers, e) => {
     try {
-      const likedBeer = await fetch('http://localhost:9000/api/v1/auth/isLiked', {
+      const likedBeer = await fetch('https://stormy-wildwood-16563.herokuapp.com/api/v1/auth/isLiked', {
         method: 'PUT',
         body: JSON.stringify({
           name: beers.name,
@@ -56,7 +56,7 @@ class ShowBeers extends Component {
   }
   addToTryBeer = async (beers, e) => {
     try {
-      const toTry = await fetch('http://localhost:9000/api/v1/auth/toTry', {
+      const toTry = await fetch('https://stormy-wildwood-16563.herokuapp.com/api/v1/auth/toTry', {
         method: 'PUT',
         body: JSON.stringify({
           name: beers.name,
@@ -76,7 +76,7 @@ class ShowBeers extends Component {
   }
   addDislikedBeer = async (beers, e) => {
     try {
-      const dislikedBeer = await fetch('http://localhost:9000/api/v1/auth/isDisliked', {
+      const dislikedBeer = await fetch('https://stormy-wildwood-16563.herokuapp.com/api/v1/auth/isDisliked', {
         method: 'PUT',
         body: JSON.stringify({
           name: beers.name,
