@@ -27,23 +27,16 @@ class Beers extends Component {
     }
   }
 
-handleLogout = (e) => {
+  handleLogout = (e) => {
     e.preventDefault();
     this.props.history.push('/');
-
   }  
 
   render() {
     return (
       <div className="Beer">  
-        {/* {this.state.isLoggedIn ? <GetBeers logoutHandler={this.logoutHandler}/> : <Login loginHandler={this.loginHandler}/>} */}
-        {/* <GetBeers /> */}
-        {/* <Login logoutHandler={this.logoutHandler} loginHandler={this.loginHandler} /> */}
-        <GetBeers handleLogout={this.handleLogout} userId={this.state.userId}/>
-        {/* <UsersBeers /> */}
+        <GetBeers handleLogout={this.handleLogout} userId={this.state.userId} username={this.state.username} isLogged/>
       </div>
-
-
     );
   }
 }

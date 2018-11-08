@@ -27,3 +27,6 @@
 
 ## Struggles
 - Sending API data to our database
+- Send state from a child component to another child compenent
+- Trying to get this.props.history.push to send data across component
+- Not being able to send the cookie from req.session back to express

@@ -11,7 +11,8 @@ import { withRouter } from "react-router";
       passwordLog: '',
       usernameReg: '',
       passwordReg: '',
-      userId: ''
+      userId: '',
+      logged: false,
     }
   }
 
@@ -39,17 +40,15 @@ import { withRouter } from "react-router";
     e.preventDefault();
     const registerResponse = await fetch('http://localhost:9000/api/v1/auth/register', {
       method: 'POST',
-      body: JSON.stringify(this.state),
+      body: JSON.stringify({username: this.state.usernameReg,
+        password: this.state.passwordReg}),
       headers: {
         'Content-Type': 'application/json'
       }
     });
   
     const parsedResponse = await registerResponse.json();
-    console.log(parsedResponse.userId, 'parsed response userid')
     if (parsedResponse.data === 'register successful') {
-      // change our component
-      console.log('success register') 
       this.setState({
         userId: parsedResponse.userId
       })     
@@ -59,9 +58,11 @@ import { withRouter } from "react-router";
       })
     }
     else {
-      console.log('not working')
+      console.log('this is not working')
     }
   }
+
+
   handleLogin = async (e) => {
     e.preventDefault();
     try{
@@ -76,17 +77,15 @@ import { withRouter } from "react-router";
           'Content-Type': 'application/json'
         }
       })
-      
       const parsed = await userQ.json()
-      console.log(parsed, 'parsed data')
-      if(parsed.data === 'register successful'){ 
-        console.log('registered')
+      if(parsed.logged === true){ 
         this.setState({
           userId: parsed._Id
         })               
         this.props.history.push({
           pathname: '/beers',
-          state: {userId: this.state.userId}
+          state: {userId: this.state.userId,
+          logged: true}
         })
       }
       else{

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Card, Segment, Button, Icon } from 'semantic-ui-react';
+import { Card, Button, Icon, Container, Image } from 'semantic-ui-react';
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 
@@ -19,11 +19,12 @@ class ShowBeers extends Component {
       userId: ''
     }
   }
-
   componentDidMount() {
+    
     const userId = JSON.parse(localStorage.getItem("userId"))
     if (userId){
       this.handleUserId(userId)
+      
     }
   }
   handleUserId = (userIdData) => {
@@ -35,7 +36,6 @@ class ShowBeers extends Component {
   }
   addLikedBeer = async (beers, e) => {
     try {
-      
       const likedBeer = await fetch('http://localhost:9000/api/v1/auth/isLiked', {
         method: 'PUT',
         body: JSON.stringify({
@@ -48,8 +48,7 @@ class ShowBeers extends Component {
         credentials: 'same-origin'
       });
       const likedBeerJson = await likedBeer.json()
-      
-      this.props.handleLiked(likedBeerJson);
+      this.props.handleLiked(likedBeerJson.data.isLiked);
       
     } catch (error) {
       console.log(error)
@@ -69,7 +68,7 @@ class ShowBeers extends Component {
         credentials: 'same-origin'
       });
       const toTryJson = await toTry.json()
-      this.props.handleToTry(toTryJson);
+      this.props.handleToTry(toTryJson.data.toTry);
     } catch (error) {
       
       console.log(error)
@@ -77,7 +76,6 @@ class ShowBeers extends Component {
   }
   addDislikedBeer = async (beers, e) => {
     try {
-      console.log('hitting disliked try')
       const dislikedBeer = await fetch('http://localhost:9000/api/v1/auth/isDisliked', {
         method: 'PUT',
         body: JSON.stringify({
@@ -90,29 +88,34 @@ class ShowBeers extends Component {
         credentials: 'same-origin'
       });
       const dislikedBeerJson = await dislikedBeer.json()
-      this.props.handleDisliked(dislikedBeerJson);
+      this.props.handleDisliked(dislikedBeerJson.data);
     } catch (error) {
       console.log(error)
     }
 
   }
+  
     render(){
       const beersList = this.props.allBeers.map((beer, i) => {
-      return (
+        let img = "https://i.imgur.com/CaGMh88.png";
+        if (beer.labels){
+        img = beer.labels.icon
+        }
+        return (
         <Card color='orange' key={i} style={{ maxWidth: 300 }} >
-          {/* <Image src={beer.labels} size='small' floated='left' /> */}
+          
           <Card.Header textAlign='right'></Card.Header>
           <Card.Content>
-            <Segment>
+            <Container>
+                <Image src={img} /> 
               <h3>Name:</h3>
               <h2>{beer.name}</h2>
               <p>{beer.description}</p>
               <p>ABV: {beer.abv}</p>
-            </Segment>
+            </Container>
             <Button fluid onClick={this.addLikedBeer.bind(null, beer)}> <Icon name='like' />Like</Button><br />
             <Button fluid onClick={this.addToTryBeer.bind(null, beer)}> <Icon name='beer' />Want to Try</Button><br />
             <Button fluid onClick={this.addDislikedBeer.bind(null, beer)}> <Icon name='thumbs down' />Dislike</Button><br />
-            <Button fluid > <Icon name='ban' />Not Interested</Button><br />
           </Card.Content>
         </Card>
       )
@@ -120,7 +123,7 @@ class ShowBeers extends Component {
   return(
     <div style = {{ display: 'flex', justifyContent: 'center' }} >
 
-  <Card.Group>
+  <Card.Group itemsPerRow={3}>
     {beersList}
   </Card.Group>
     </div >
