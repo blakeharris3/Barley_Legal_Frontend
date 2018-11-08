@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Header } from 'semantic-ui-react';
+import { Divider, Segment, Icon} from 'semantic-ui-react';
 import './App.css';
 import Login from './Login';
 import Beers from './BeerContainer'
 import BeerHeader from './Header'
-import UsersBeers from './UsersBeer'
+
 import { Route, Switch, withRouter } from 'react-router-dom';
 
 class App extends Component {
@@ -12,16 +12,18 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header as='h1' >
-          Barley Legal
-        </Header>
+
         <BeerHeader/>
+        <Divider/>
         <Switch >
           <Route exact path='/' component={Login} />
           <Route exact path='/beers' component={Beers} />
-          <Route exact path='/usersbeers' component={UsersBeers}/>
-          {/* {this.state.isLoggedIn ? <GetBeers logoutHandler={this.logoutHandler}/> : <Login loginHandler={this.loginHandler}/>} */}
         </Switch>
+        <Segment color='orange'>
+          <Divider horizontal >
+            Barley Legal <Icon circular name='copyright outline'/> Copyright 2018 All Rights Reserved
+          </Divider>
+        </Segment>
       </div>
     );
   }
