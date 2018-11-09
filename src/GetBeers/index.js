@@ -19,7 +19,6 @@ import { withRouter } from 'react-router-dom';
     this.setState({
       toTry: [beerRemoved]
     })
-    console.log(this.state.toTry, "to Try line 22")
   }
   getBeer = async () => {
     try {

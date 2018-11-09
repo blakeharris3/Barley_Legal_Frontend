@@ -48,8 +48,7 @@ class UsersBeers extends Component {
         <Grid color='orange' key={i} style={{ maxWidth: 300 }} columns={1}>
           <Grid.Column>
             <Card color='orange' >
-              {beer[beer.length - 1]}    
-            {/*<Button onClick={this.removeToTry.bind(null, beer[i])}>Remove</Button> */}
+              {beer[beer.length - 1]}   
             </Card>
           </Grid.Column>
         </Grid>
@@ -70,7 +69,6 @@ class UsersBeers extends Component {
     })
 
 
-    //console.log(this.props.isLiked, 'is liked beers usersbeers')
     return(
     <Container>
     <Grid columns={3} >
