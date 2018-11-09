@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-// import './App.css';
 import GetBeers from '../GetBeers'
-// import Login from "../Login"
-// import UsersBeers from '../UsersBeer'
+
 
 
 class Beers extends Component {
