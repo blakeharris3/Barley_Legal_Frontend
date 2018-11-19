@@ -70,7 +70,7 @@ import { withRouter } from 'react-router-dom';
           <Form onSubmit={this.props.handleLogout}>
             <Button fluid color='orange' size='large' type='Submit' > <Icon name='beer' />Logout</Button>
           </Form>
-         
+          {/* The indentation in this section could be improved */}
         </Container> 
         <Grid.Column width={10}>
           <Header as='h1' attached='top'>

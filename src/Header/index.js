@@ -9,7 +9,8 @@ const BeerHeader = () => {
     <Segment>
       
     <Header>
-      
+      {/* Nesting a header component inside another header 
+      component is not a good practice of DRY Principles */}
       <Header as='h1' >
           <Image src='https://i.imgur.com/CaGMh88.png' />
         Barley Legal
