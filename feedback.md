@@ -118,7 +118,7 @@ The above key will serve as a helpful overall gauge of whether you met the proje
 
 ## Project Workflow - 2
 
-Good job coming up with a very creative project design for project three. One thing that was necessary for this part of the grade was to include your wireframes in the README. Also, for your API endpoints we also needed to see each of the urls that will be used to makes requests to your API.
+Good job coming up with a very creative project design for project three. One thing that was necessary for this part of the grade was to include your wireframes in the README. Also, for your API endpoints we also needed to see each of the urls that will be used to makes request to your API.
 
 ## Technical Requirements - 3
 
