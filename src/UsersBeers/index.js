@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Header, Card, Container, Image, Divider, Button } from 'semantic-ui-react';
+                                                // A button is imported but never used.
 import './style.css'
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
@@ -70,7 +71,8 @@ class UsersBeers extends Component {
 
 
     return(
-    <Container>
+    <Container> 
+      {/* The indentation for this section could probably be improved */}
     <Grid columns={3} >
 
       <Grid.Column >
